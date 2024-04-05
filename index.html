@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <video autoplay muted loop id="myVideo">
+    <source src="https://static.vecteezy.com/system/resources/previews/003/146/726/mp4/red-circle-particles-bokeh-light-background-free-video.mp4" type="video/mp4">
+  </video>
+<head>
+  <style>
+    #myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+    
+
+    .container {
+      position: absolute;
+      width: 300px;
+      height: 150px;
+      border: 1px solid #ccc;
+      margin: 50px auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #a21212; /* Set desired container background color */
+    }
+    .container {
+    position: absolute;
+    width: 400px; /* Increased width */
+    height: 200px; /* Increased height */
+    border: 1px solid #ccc;
+    margin: 0 auto; /* Center the box horizontally */
+    top: 50%; /* Center the box vertically */
+    left: 0;
+    right: 0;
+    transform: translateY(-50%); /* Adjust vertical centering */
+    background-color: rgba(162, 18, 18, 0.7); /* Transparent background */
+    border-radius: 10px; /* Smoother corners */
+  }
+
+  .question {
+    font-size: 24px; /* Increased font size */
+    font-weight: bold;
+    padding: 20px;
+    color: #fff; /* Font color */
+  }
+    
+
+    .options {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+    }
+
+    .option {
+      padding: 5px 15px;
+      background-color: #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .option.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .link {
+      font-size: 16px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #emoji {
+      position: absolute;
+      font-size: 40px;
+      transition: transform 0.3s;
+    }
+
+    
+    #emoji {
+    position: absolute;
+    font-size: 60px; 
+    transition: transform 1s ease;
+  }
+  #emoji {
+    position: absolute;
+    font-size: 60px; 
+    transition: transform 1s ease; 
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%); /* Adjust horizontal and vertical centering */
+  }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 80%;
+      height: 80%;
+      margin: 10% auto;
+      background-color: #c01f54;
+      padding: 20px;
+    }
+
+    .modal-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="question">Do You Love Me?</div>
+    <div class="options">
+      <div class="option" onmouseover="updateEmoji('smile')" onmouseout="updateEmoji('')" onclick="showModal('https://media4.giphy.com/media/l30XwNHYd3sA9rWR9w/giphy.gif?cid=ecf05e479tj7kipc2akburur4c51ntkkcu76mwglbtn2o3ym&ep=v1_gifs_search&rid=giphy.gif&ct=g')">Yes</div>
+      <div class="option" onmouseover="updateEmoji('sad'); handleNoHover();" onmouseout="updateEmoji(''); handleNoHoverEnd();" onclick="moveBox('No')">No</div>
+      
+    </div>
+    <div id="link" class="link"></div>
+    <div id="emoji"></div>
+  </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <p>I ALREADY KNEW IT....:</p>
+      <img id="modalImage" src="" alt="Image">
+      ;>
+    </div>
+  </div>
+
+  <script>
+    var box = document.querySelector('.container');
+    var link = document.getElementById('link');
+    var moveInterval;
+
+    var emoji = document.getElementById('emoji');
+    var emojiTimeout;
+
+    var modal = document.getElementById('myModal');
+    var modalImage = document.getElementById('modalImage');
+
+    function updateEmoji(mood) {
+      emoji.innerHTML = mood === 'smile' ? '😊' : '😢';
+      emoji.classList.toggle('sad', mood === 'sad');
+
+      clearTimeout(emojiTimeout);
+      emojiTimeout = setTimeout(function() {
+        emoji.innerHTML = '';
+      }, 1000);
+    }
+
+    function moveBox(option) {
+  if (option === 'Yes') {
+    link.innerHTML = '';
+    return;
+  }
+  box.style.transition = 'left 0.5s, top 0.5s'
+
+  var boxPositionX = Math.random() * (window.innerWidth - box.offsetWidth);
+  var boxPositionY = Math.random() * (window.innerHeight - box.offsetHeight);
+
+  
+  var maxMoveX = window.innerWidth - box.offsetWidth;
+  var maxMoveY = window.innerHeight - box.offsetHeight;
+
+ 
+  if (boxPositionX > maxMoveX) {
+    boxPositionX = maxMoveX;
+  }
+  if (boxPositionY > maxMoveY) {
+    boxPositionY = maxMoveY;
+  }
+
+  box.style.left = boxPositionX + 'px';
+  box.style.top = boxPositionY + 'px';
+
+ 
+  updateEmoji('');
+}
+
+function updateEmoji(mood) {
+  emoji.innerHTML = mood === 'smile' ? '😊' : '😢';
+  emoji.classList.toggle('sad', mood === 'sad');
+
+  clearTimeout(emojiTimeout);
+  emojiTimeout = setTimeout(function () {
+    emoji.innerHTML = '';
+    emoji.style.left = box.offsetWidth / 2 - emoji.offsetWidth / 2 + 'px'; // Adjust emoji position to remain centered
+    emoji.style.top = box.offsetHeight / 2 - emoji.offsetHeight / 2 + 'px'; // Adjust emoji position to remain centered
+  }, 1000);
+}
+function handleNoHover() {
+      hoverInterval = setInterval(function () {
+        moveBox('No');
+      }, 300);
+    }
+
+    function handleNoHoverEnd() {
+      clearInterval(hoverInterval);
+    }
+
+    function showModal(imageUrl) {
+      modalImage.src = imageUrl;
+      modal.style.display = 'block';
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
